@@ -1,0 +1,13 @@
+:root {
+  font-size: 12px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-checkbox .custom-control-label::before {
+  border-radius: 30px;
+}
