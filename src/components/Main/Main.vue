@@ -1,32 +1,35 @@
 <template>
   <div class="main">
-    <!-- 左侧图片区域 -->
-    <div class="left">
-      <div class="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          class="custom-control-input"
-          :id="id"
-          :checked="state"
-          @change="onCheckedChange"
-        />
-        <label class="custom-control-label" :for="id">
-          <img :src="thumb" class="avatar" alt />
-        </label>
+    
+    <div class="goods-item" v-for="item in cartlist" :key="item.id">
+      <!-- 左侧图片区域 -->
+      <div class="left">
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            :id="item.id"
+            :checked="item.goods_state"
+            @change="updateGoodsState({id:item.id, checked: item.goods_state})"
+          />
+          <label class="custom-control-label" :for="item.id">
+            <img :src="item.goods_img" class="avatar" alt />
+          </label>
+        </div>
       </div>
-    </div>
-    <!-- 右侧商品区域 -->
-    <div class="right">
-      <!-- 标题 -->
-      <div class="title">{{ title }}</div>
-      <div class="info">
-        <!-- 单价 -->
-        <span class="price">￥{{ price }}</span>
-        <div class="btns">
-          <!-- 按钮区域 -->
-          <button class="btn btn-light" @click="onBtnClick(-1)">-</button>
-          <span class="count">{{ count }}</span>
-          <button class="btn btn-light" @click="onBtnClick(1)">+</button>
+      <!-- 右侧商品区域 -->
+      <div class="right">
+        <!-- 标题 -->
+        <div class="title">{{ item.goods_name }}</div>
+        <div class="info">
+          <!-- 单价 -->
+          <span class="price">￥{{ item.goods_price }}</span>
+          <div class="btns">
+            <!-- 按钮区域 -->
+            <button class="btn btn-light">-</button>
+            <span class="count">{{ item.goods_count }}</span>
+            <button class="btn btn-light" >+</button>
+          </div>
         </div>
       </div>
     </div>
@@ -34,16 +37,29 @@
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex'
 export default {
   name: 'Main',
+  data(){
+    return {}
+  },
+  methods: {
+    ...mapMutations('cart',['updateGoodsState'])
+  },
+  computed: {
+    ...mapState('cart', ['cartlist'])
+  },
+
 }
 </script>
 
 <style scoped>
 .main {
+  padding-top: 50px;
+}
+.goods-item {
   display: flex;
   padding: 10px;
-  padding-top: 50px;
   border-top: 1px solid #f8f8f8;
 }
 
