@@ -26,9 +26,9 @@
           <span class="price">￥{{ item.goods_price }}</span>
           <div class="btns">
             <!-- 按钮区域 -->
-            <button class="btn btn-light">-</button>
+            <button class="btn btn-light" @click="updateGoodsCount({id: item.id,type:'minus'})">-</button>
             <span class="count">{{ item.goods_count }}</span>
-            <button class="btn btn-light" >+</button>
+            <button class="btn btn-light" @click="updateGoodsCount({id: item.id, type:'add'})">+</button>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default {
     return {}
   },
   methods: {
-    ...mapMutations('cart',['updateGoodsState'])
+    ...mapMutations('cart',['updateGoodsState','updateGoodsCount'])
   },
   computed: {
     ...mapState('cart', ['cartlist'])
@@ -56,6 +56,7 @@ export default {
 <style scoped>
 .main {
   padding-top: 50px;
+  padding-bottom: 50px;
 }
 .goods-item {
   display: flex;

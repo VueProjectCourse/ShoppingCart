@@ -16,7 +16,6 @@ const moduleCart = {
     },
     // 更新购物车状态
     updateGoodsState(state, payload) {
-      console.log(payload)
       state.cartlist.forEach(element => {
         if (element.id === payload.id) {
           element.goods_state = !element.goods_state
@@ -24,19 +23,31 @@ const moduleCart = {
       });
     },
     // 更新商品的购买数量
-    updateGoodsCount(state,payload){
-      state.cartlist.forEach(item=> {
+    updateGoodsCount(state, payload) {
+      // console.log(payload)
+      state.cartlist.forEach(item => {
         // 找到 对应的 那件 商品
-         if (item.id === payload.id) {
-           item.goods_count = payload.value;
-           return true;
-         }
+        if (item.id === payload.id) {
+          //  item.goods_count = payload.value;
+          if (payload.type === 'minus') {
+            item.goods_count > 0 ? item.goods_count -= 1 : 0;
+          } else if (payload.type === 'add') {
+            item.goods_count >= 0 ? item.goods_count += 1 : 0;
+          }
+          return true;
+        }
+      })
+    },
+    // 全选功能
+    updateAllGoodsState(state, payload) {
+      // console.log(payload)
+      state.cartlist.forEach(item => {
+        item.goods_state = payload.e.target.checked;
       })
     }
   },
   actions: {
     async initCartList(ctx) {
-      console.log(ctx)
       // 请求接口数据
       const { data: res } = await getCartListAPI();
 
@@ -46,6 +57,29 @@ const moduleCart = {
 
         console.log(ctx.state.cartlist)
       }
+    }
+  },
+  getters: {
+    // 商品是否全选
+    isFullChecked(state) {
+      return state.cartlist.every(item => item.goods_state)
+    },
+    // 已勾选商品的总价格
+    amount(state) {
+      let amt = 0;
+      state.cartlist.filter(x => x.goods_state).forEach(x => {
+        amt += x.goods_count * x.goods_price
+      })
+
+      return amt;
+    },
+    // 动态计算已勾选的商品总数量
+    total(state) {
+      let t = 0;
+      state.cartlist.filter(x => x.goods_state).forEach(x => {
+        t += x.goods_count
+      })
+      return t;
     }
   }
 }

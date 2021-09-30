@@ -2,28 +2,39 @@
   <div class="footer">
     <!-- 左侧的复选框 -->
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="fullcheck" />
-      <label class="custom-control-label" for="fullcheck">全选</label>
+      <input type="checkbox" :checked="isFullChecked" class="custom-control-input" @change="updateAllGoodsState({e:$event})" id="fullcheck" />
+      <label class="custom-control-label" for="fullcheck" >全选</label>
     </div>
     <!-- 中间的合计 -->
     <div>
       <span>合计：</span>
-      <span class="price">￥0</span>
+      <span class="price">￥{{ amount }}</span>
     </div>
 
     <!-- 右侧结算按钮 -->
-    <button class="btn btn-primary btn-settle">结算（0）</button>
+    <button class="btn btn-primary btn-settle">结算（{{ total }}）</button>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex"
 export default {
   name: 'Footer',
+
+  computed: {
+    ...mapGetters('cart', ['isFullChecked', 'amount', 'total'])
+  },
+  methods: {
+    ...mapMutations('cart', ['updateAllGoodsState']),
+    onStateChange(e) {
+      console.log(111111111111)
+      console.log(e);
+    }
+  }
 }
 </script>
 
 <style scoped>
-
 .footer {
   position: fixed;
   background-color: white;
