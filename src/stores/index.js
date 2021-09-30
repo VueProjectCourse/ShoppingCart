@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     // 2. 注册购物车模块
-    cart: cartStore,
+    cart: cartStore
   },
 })
 

@@ -1,7 +1,7 @@
 // 导入获取列表数据的 API
 import { getCartListAPI } from '@/api/cartAPI'
 
-const moduleCart = {
+const cartStore = {
   // 1.1 开启命名空间
   namespaced: true,
   // 1.2 数据
@@ -12,6 +12,7 @@ const moduleCart = {
   mutations: {
     // 更新购物车数据
     updateCartList(state, payload) {
+      // 把接收到的数据，存储到 state.cartlist 中
       state.cartlist = payload;
     },
     // 更新购物车状态
@@ -54,8 +55,6 @@ const moduleCart = {
       if (res.status === 200) {
         // TODO： 触发 Mutation 方法， 把请求到的数据转交给 Mutation 方法， 最终存储到 state 之中
         ctx.commit('updateCartList', res.list);
-
-        console.log(ctx.state.cartlist)
       }
     }
   },
@@ -84,4 +83,4 @@ const moduleCart = {
   }
 }
 
-export default moduleCart
+export default cartStore

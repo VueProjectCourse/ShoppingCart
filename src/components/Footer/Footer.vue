@@ -8,7 +8,7 @@
     <!-- 中间的合计 -->
     <div>
       <span>合计：</span>
-      <span class="price">￥{{ amount }}</span>
+      <span class="price">&yen;{{ amount }}</span>
     </div>
 
     <!-- 右侧结算按钮 -->
@@ -18,18 +18,14 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"
+
 export default {
   name: 'Footer',
-
   computed: {
     ...mapGetters('cart', ['isFullChecked', 'amount', 'total'])
   },
   methods: {
     ...mapMutations('cart', ['updateAllGoodsState']),
-    onStateChange(e) {
-      console.log(111111111111)
-      console.log(e);
-    }
   }
 }
 </script>

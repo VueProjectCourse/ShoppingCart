@@ -23,10 +23,12 @@ export default {
    
   },
   methods: {
+     // 映射需要的 Action 方法
     ...mapActions('cart',['initCartList'])
   },
 
   created(){
+    // 初始化列表的数据
     this.initCartList();
   }
   

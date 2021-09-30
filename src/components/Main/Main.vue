@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    
     <div class="goods-item" v-for="item in cartlist" :key="item.id">
       <!-- 左侧图片区域 -->
       <div class="left">
@@ -23,7 +22,7 @@
         <div class="title">{{ item.goods_name }}</div>
         <div class="info">
           <!-- 单价 -->
-          <span class="price">￥{{ item.goods_price }}</span>
+          <span class="price">&yen;{{ item.goods_price }}</span>
           <div class="btns">
             <!-- 按钮区域 -->
             <button class="btn btn-light" @click="updateGoodsCount({id: item.id,type:'minus'})">-</button>
@@ -44,9 +43,11 @@ export default {
     return {}
   },
   methods: {
+    // 映射指定模块中，需要的 Mutation 方法
     ...mapMutations('cart',['updateGoodsState','updateGoodsCount'])
   },
   computed: {
+     // 把购物车列表的数据，映射为当前 Main.vue 组件的计算属性
     ...mapState('cart', ['cartlist'])
   },
 
